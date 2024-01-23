@@ -1,0 +1,18 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "NY_Kommun_HR_system",
+            "database": "en_kommuns_hr_system",
+            "username": "root",
+            "askForPassword": true
+        }
+    ]
+}
