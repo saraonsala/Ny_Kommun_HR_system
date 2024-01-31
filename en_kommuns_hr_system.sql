@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2024 at 09:25 AM
+-- Generation Time: Jan 31, 2024 at 09:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,24 +28,37 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `authorizations_in_the_payroll_system` (
-  `ID` int(11) NOT NULL,
-  `SSYcode_ID` int(11) NOT NULL,
-  `Department_ID` int(11) NOT NULL,
-  `Municipal_administration_ID` int(11) NOT NULL,
-  `Trade_union_membership_ID` int(11) NOT NULL,
-  `Schema_employees_ID` int(11) NOT NULL,
-  `Pension_agreements_ID` int(11) NOT NULL
+  `Degree_of_eligibility_ID` int(11) NOT NULL,
+  `Parts_of_the_payroll_system_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `authorizations_in_the_payroll_system`
+--
+
+INSERT INTO `authorizations_in_the_payroll_system` (`Degree_of_eligibility_ID`, `Parts_of_the_payroll_system_ID`) VALUES
+(0, 1),
+(0, 2),
+(0, 3),
+(0, 4),
+(0, 5),
+(0, 6),
+(0, 1),
+(0, 2),
+(0, 3),
+(0, 5),
+(0, 6),
+(0, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `credentials`
+-- Table structure for table `degree_of_eligibility`
 --
 
-CREATE TABLE `credentials` (
+CREATE TABLE `degree_of_eligibility` (
   `ID` char(11) NOT NULL,
-  `Authorizations_in_ the_payroll_system_ID` int(11) NOT NULL
+  `Parts_of_the_payroll_system_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -59,14 +72,14 @@ CREATE TABLE `department` (
   `Department_name` varchar(50) NOT NULL,
   `Cost_Center` int(10) NOT NULL,
   `Employees_ID` int(11) NOT NULL,
-  `Municipal_Administration_ID` int(11) NOT NULL
+  `municipal_administation_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `department`
 --
 
-INSERT INTO `department` (`ID`, `Department_name`, `Cost_Center`, `Employees_ID`, `Municipal_Administration_ID`) VALUES
+INSERT INTO `department` (`ID`, `Department_name`, `Cost_Center`, `Employees_ID`, `municipal_administation_ID`) VALUES
 (1, 'Lonecenter', 516969, 1, 1),
 (2, 'Fordon adminstration', 514478, 3, 4),
 (3, 'Kollaskolan', 519933, 2, 2),
@@ -86,8 +99,21 @@ INSERT INTO `department` (`ID`, `Department_name`, `Cost_Center`, `Employees_ID`
 CREATE TABLE `document_storage_plan` (
   `Document_storage_time_ID` int(11) NOT NULL,
   `Storage_reason_ID` int(11) NOT NULL,
-  `Authorizations_in_the_payroll_system_ID` int(11) NOT NULL
+  `Parts_of_the_payroll_system_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `document_storage_plan`
+--
+
+INSERT INTO `document_storage_plan` (`Document_storage_time_ID`, `Storage_reason_ID`, `Parts_of_the_payroll_system_ID`) VALUES
+(1, 1, 1),
+(1, 2, 2),
+(2, 1, 3),
+(2, 1, 4),
+(1, 2, 5),
+(1, 1, 6),
+(3, 3, 7);
 
 -- --------------------------------------------------------
 
@@ -173,6 +199,22 @@ INSERT INTO `municipal_administation` (`ID`, `Org_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `parts_of_the_payroll_system`
+--
+
+CREATE TABLE `parts_of_the_payroll_system` (
+  `ID` int(11) NOT NULL,
+  `SSYcode_ID` int(11) NOT NULL,
+  `Department_ID` int(11) NOT NULL,
+  `Municipal_administration_ID` int(11) NOT NULL,
+  `Trade_union_membership_ID` int(11) NOT NULL,
+  `Schema_employees_ID` int(11) NOT NULL,
+  `Pension_agreements_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pension_agreements`
 --
 
@@ -226,14 +268,14 @@ CREATE TABLE `ssycode` (
   `SSYcode_nr` int(50) NOT NULL,
   `Position` varchar(50) NOT NULL,
   `Credential_requirement` varchar(50) NOT NULL,
-  `Credentials_ID` char(1) NOT NULL
+  `Degree_of_eligibility_ID` char(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ssycode`
 --
 
-INSERT INTO `ssycode` (`ID`, `SSYcode_nr`, `Position`, `Credential_requirement`, `Credentials_ID`) VALUES
+INSERT INTO `ssycode` (`ID`, `SSYcode_nr`, `Position`, `Credential_requirement`, `Degree_of_eligibility_ID`) VALUES
 (1, 4112, 'Payroll Consultant', 'FALSE', 'B'),
 (2, 2341, 'Manager', 'FALSE', 'B'),
 (3, 2320, 'Teacher Vocational Subjects', 'TRUE', 'D'),
@@ -289,24 +331,17 @@ INSERT INTO `trade_union_membership` (`ID`, `Union_name`) VALUES
 --
 
 --
--- Indexes for table `authorizations_in_the_payroll_system`
+-- Indexes for table `degree_of_eligibility`
 --
-ALTER TABLE `authorizations_in_the_payroll_system`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `SSYcode_ID` (`SSYcode_ID`),
-  ADD UNIQUE KEY `Department_ID` (`Department_ID`);
-
---
--- Indexes for table `credentials`
---
-ALTER TABLE `credentials`
+ALTER TABLE `degree_of_eligibility`
   ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `department`
 --
 ALTER TABLE `department`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `municipal_administation_ID` (`municipal_administation_ID`);
 
 --
 -- Indexes for table `document_storage_time`
@@ -329,6 +364,12 @@ ALTER TABLE `employees`
 -- Indexes for table `municipal_administation`
 --
 ALTER TABLE `municipal_administation`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `parts_of_the_payroll_system`
+--
+ALTER TABLE `parts_of_the_payroll_system`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -366,12 +407,6 @@ ALTER TABLE `trade_union_membership`
 --
 
 --
--- AUTO_INCREMENT for table `authorizations_in_the_payroll_system`
---
-ALTER TABLE `authorizations_in_the_payroll_system`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
@@ -393,6 +428,12 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `municipal_administation`
 --
 ALTER TABLE `municipal_administation`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `parts_of_the_payroll_system`
+--
+ALTER TABLE `parts_of_the_payroll_system`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
@@ -430,12 +471,10 @@ ALTER TABLE `trade_union_membership`
 --
 
 --
--- Constraints for table `document_storage_plan`
+-- Constraints for table `department`
 --
-ALTER TABLE `document_storage_plan`
-  ADD CONSTRAINT `document_storage_plan_ibfk_1` FOREIGN KEY (`Authorizations_in_the_payroll_system_ID`) REFERENCES `authorizations_in_the_payroll_system` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `document_storage_plan_ibfk_2` FOREIGN KEY (`Document_storage_time_ID`) REFERENCES `document_storage_time` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `document_storage_plan_ibfk_3` FOREIGN KEY (`Storage_reason_ID`) REFERENCES `storage_reason` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `department`
+  ADD CONSTRAINT `department_ibfk_1` FOREIGN KEY (`municipal_administation_ID`) REFERENCES `municipal_administation` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `employees`
