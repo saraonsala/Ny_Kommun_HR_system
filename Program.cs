@@ -47,7 +47,7 @@ class Program
             {
                 Console.WriteLine($"ID: {row.ID}");
                 Console.WriteLine($"Name: {row.Name}");
-                Console.WriteLine($"Salary: {row.Salary}");
+                Console.WriteLine($"Salary: {row.Salary.ToString("C", new System.Globalization.CultureInfo("sv-SE"))}");
                 Console.WriteLine($"Holiday Entitlement: {row.Holiday_entitlement}");
                 Console.WriteLine($"SSYcode: {row.SSYcode}");
                 Console.WriteLine($"Department: {row.Department_name}");
